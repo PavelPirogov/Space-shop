@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="jquery/jquery-3.6.0.min.js"></script>
+    <link rel="icon" href="/pages/img/satelite_86323.png" type="image/png">
+    <title>Взорви летуна</title>
+    <style>
+        body {
+            background-image: url(/pages/img/zvezdnoe_nebo_noch_bereg_117429_2560x1440.jpg);
+            background-size: cover;
+            width: 100%;
+
+        }
+
+        div.a {
+            position: fixed;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        div.b {
+            position: fixed;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        div.c {
+            position: fixed;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        div.d {
+            position: fixed;
+            border-radius: 50%;
+            cursor: pointer;
+            transform: scaleX(-1);
+        }
+
+        .score {
+            color: blanchedalmond;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="score container-fluid">
+        <h1>Счёт: 0 кликни на летуна</h1>
+    </div>
+
+    <div class="container-fluid imag">
+        <div class='a' onclick="nloHidden(this)" id="nlo1">
+            <img src="/pages/img/alien-dance.gif" alt="nlo1" width="120">
+        </div>
+        <div class='b' onclick="nloHidden(this)" id="nlo2">
+            <img src="/pages/img/nlo.gif" alt="nlo2" width="120">
+        </div>
+        <div class='c' onclick="nloHidden(this)" id="nlo3">
+            <img src="/pages/img/rocket.gif" alt="nlo3" width="120">
+        </div>
+        <div class='d' onclick="nloHidden(this)" id="nlo4">
+            <img src="/pages/img/trump-maga.gif" alt="nlo4" width="120">
+        </div>
+        <img src="/pages/img/gif-explosion-20.gif" alt="explosion" id="explosion" width="70" hidden
+            style="position: absolute;">
+    </div>
+
+
+    <script>
+
+
+        let points = 0;
+        let nloa = document.querySelector(".a");
+        let nlob = document.querySelector(".b");
+        let nloc = document.querySelector(".c");
+        let nlod = document.querySelector(".d");
+        let exImg = document.getElementById("explosion");
+        let flag = 0;
+        let step = 0;
+
+        $(document).ready(function () {
+            animateDiv('.a');
+            animateDiv('.b');
+            animateDiv('.c');
+            animateDiv('.d');
+        });
+
+        function makeNewPosition() {// Получить размеры видовых экранов (удалить размер div)
+            let h = $(window).height() - 100;
+            let w = $(window).width() - 100;
+            let nh = Math.floor(Math.random() * h);
+            let nw = Math.floor(Math.random() * w);
+            return [nh, nw];
+        }
+
+        function animateDiv(myclass) {
+            // flag = newq[1];
+            // console.log(flag);
+            newq = makeNewPosition();
+            step = myclass;
+            // console.log(step);
+            $(myclass).animate({ top: newq[0], left: newq[1] }, 5000,
+                function () { animateDiv(myclass); });
+        };
+
+        // function animation() {
+        //     if (window.innerWidth-120  > step && flag) {
+        //         nloa.style.transform = 'scaleX(-1)';
+        //         nlob.style.transform = 'scaleX(-1)';
+        //         nloc.style.transform = 'scaleX(1)';
+        //         nlod.style.transform = 'scaleX(-1)';
+        //         step += 1;
+        //     } else {
+        //         nloa.style.transform = 'scaleX(1)';
+        //         nlob.style.transform = 'scaleX(1)';
+        //         nloc.style.transform = 'scaleX(-1)';
+        //         nlod.style.transform = 'scaleX(1)';
+        //         step -= 1;
+        //         flag = step == 0 ? true : false;
+        //     }
+        //     nloa.style.left = step + 'px';
+        //     nlob.style.left = step + 'px';
+        //     nloc.style.left = step + 'px';
+        //     nlod.style.left = step + 'px';
+        // }
+        // setInterval(animation, 50);
+
+        function nloHidden(n) {
+            let s = document.querySelector(".score").childNodes[1].childNodes[0];
+            let a = n.childNodes;
+
+            exImg.style.top = a[1].getBoundingClientRect().top + 'px';
+            exImg.style.left = a[1].getBoundingClientRect().left + 'px';
+
+            n.hidden = true;
+
+            setTimeout(ex, 1);
+            setTimeout(exH, 1000);
+            function ex() { exImg.hidden = false };
+            function exH() { exImg.hidden = true };
+
+            if (nloa.hidden == true) {
+                points += 1;
+                setTimeout(nloA, 5000);
+            }
+            function nloA() { nloa.hidden = false };
+
+            if (nlob.hidden == true) {
+                points += 2;
+                setTimeout(nloB, 10000);
+            }
+            function nloB() { nlob.hidden = false };
+
+            if (nloc.hidden == true) {
+                points += 3;
+                setTimeout(nloC, 15000);
+            }
+            function nloC() { nloc.hidden = false };
+
+            if (nlod.hidden == true) {
+                points += 4;
+                setTimeout(nloD, 20000);
+            }
+            function nloD() { nlod.hidden = false };
+
+            if (s.values == undefined) {
+                s.values = "Счёт: " + points;
+                document.querySelector(".score").childNodes[1].innerText = s.values;
+            };
+        }
+
+        // nloa.ondragstart = function () {
+        //     return false;
+        // };
+        // nlob.ondragstart = function () {
+        //     return false;
+        // };
+        // nloc.ondragstart = function () {
+        //     return false;
+        // };
+        // nlod.ondragstart = function () {
+        //     return false;
+        // };
+
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
