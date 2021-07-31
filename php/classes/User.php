@@ -78,4 +78,5 @@ class User
         // var_dump(json_encode($result["name"]));
         return json_encode($result);
     }
+    
 }

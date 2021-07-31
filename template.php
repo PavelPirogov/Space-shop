@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="vendors/nice-select/nice-select.css">
 	<link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
 	<link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+	<script src="https://kit.fontawesome.com/385723fa6a.js" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" href="css/style.css">
 </head>
@@ -57,7 +58,7 @@
 									<li class="nav-item"><a class="nav-link" href="tracking-order.html">Отслеживание</a></li>
 								</ul>
 							</li>
-							<li class="nav-item"><a class="nav-link" href="contact.html">Контакты</a></li>
+							<li class="nav-item"><a class="nav-link" href="contact">Контакты</a></li>
 						</ul>
 
 						<ul class="nav-shop">
@@ -73,7 +74,6 @@
 	<!--================ End Header Menu Area =================-->
 
 	<?php echo $content ?>
-
 
 	<!--================ Start footer Area  =================-->
 	<footer class="footer">
@@ -108,12 +108,12 @@
 						<div class="single-footer-widget instafeed">
 							<h4 class="footer_title">Галерея</h4>
 							<ul class="list instafeed d-flex flex-wrap">
-								<li><img src="img/gallery/r1.jpg" alt=""></li>
-								<li><img src="img/gallery/r2.jpg" alt=""></li>
-								<li><img src="img/gallery/r3.jpg" alt=""></li>
-								<li><img src="img/gallery/r5.jpg" alt=""></li>
-								<li><img src="img/gallery/r7.jpg" alt=""></li>
-								<li><img src="img/gallery/r8.jpg" alt=""></li>
+								<li><img src="/pages/img/image 7.png" alt=""></li>
+								<li><img src="/pages/img/image 8.png" alt=""></li>
+								<li><img src="/pages/img/image 10.png" alt=""></li>
+								<li><img src="/pages/img/image 11.png" alt=""></li>
+								<li><img src="/pages/img/image 13.png" alt=""></li>
+								<li><img src="/pages/img/image 9.png" alt=""></li>
 							</ul>
 						</div>
 					</div>

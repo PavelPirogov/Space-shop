@@ -30,6 +30,8 @@ if ($url[1] == ("blog")) {
     $content = file_get_contents("pages/register.html");
 } else if ($url[1] == ("nobay")) {
     $content = file_get_contents("pages/nobay.html");
+} else if ($url[1] == ("contact")) {
+    $content = file_get_contents("pages/contact.html");
 } else if ($url[1] == ("users")) {
     require_once("pages/users/index.html");
 } else if ($url[1] == ("addUser")) {

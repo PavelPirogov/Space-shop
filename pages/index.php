@@ -6,17 +6,19 @@
       <div class="row no-gutters align-items-center pt-60px">
         <div class="col-5 d-none d-sm-block">
           <div class="hero-banner__img">
-            <img class="img-fluid" src="/pages/img/image 5.png" alt="">
+            <img class="img-fluid" src="/pages/img/image 5 1.png" alt="">
           </div>
         </div>
         <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
           <div class="hero-banner__content">
             <h4>Магазин - это весело</h4>
             <h1>Просмотрите наш премиальный продукт</h1>
-            <p>Играй и получай очки. При достаточном количестве очков можно купить планету или другой объект солнечной системы и галактики Млечный путь.
+            <p>Играй и получай очки. При достаточном количестве очков можно купить планету или другой объект солнечной системы и галактики Млечный путь. <br>
             <p style="color: brown">Не пропусти только сегодня спутник Юпитера Элара со скидкой 30%</p>
             </p>
+            <p class="mb-5"></p>
             <a class="button button-hero" href="#">Просмотреть сейчас </a>
+            <h3 class="mb-5"></h3>
           </div>
         </div>
       </div>
@@ -25,7 +27,7 @@
   <!--================ Hero banner start =================-->
 
   <!--================ Hero Carousel start =================-->
-  <section class="section-margin mt-0">
+  <section class="section-margin mt-5">
     <div class="owl-carousel owl-theme hero-carousel">
       <div class="hero-carousel__slide">
         <img src="/pages/img/image 6 (1).png" alt="" class="img-fluid">
