@@ -100,8 +100,8 @@
                 <img src="../img/blog/author.png" alt="" width="100%">
               </div>
               <div class="col-sm-9">
-                <h2 id="userName">Василий</h2>
-                <h2 id="userLastname">Пупкин</h2>
+                <h2 id="uN">Василий</h2>
+                <h2 id="uLn">Пупкин</h2>
                 <h3>О себе</h3>
                 <p>Мышление мгновенно вызывает импульс. Особую ценность, на наш взгляд, представляет бессознательное
                   косвенно. Наши исследования позволяют сделать вывод о том, что импульс аннигилирует экспериментальный
@@ -176,13 +176,13 @@
           <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
             <h1>Настройки страницы</h1>
             <p>Имя:
-              <span></span>
+              <span id="userName"></span>
               <span class="edit-btn">[Изменить]</span>
               <span class="save-btn" hidden data-item="name">[Сохранить]</span>
               <span class="cancel-btn" hidden>[Отменить]</span>
           </p>
           <p>Фамилия:
-              <span></span>
+              <span id="userLastname"></span>
               <span class="edit-btn">[Изменить]</span>
               <span class="save-btn" hidden data-item="lastname">[Сохранить]</span>
               <span class="cancel-btn" hidden>[Отменить]</span>
@@ -219,6 +219,8 @@
       user = getUser();
       console.log(user);
       getUser().then(user => {
+        uN.innerText = `${user.name}`;
+        uLn.innerText = `${user.lastname}`;
         userName.innerText = `${user.name}`;
         userLastname.innerText = `${user.lastname}`;
         userEmail.innerText = `${user.email}`;
