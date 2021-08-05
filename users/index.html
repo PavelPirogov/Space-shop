@@ -11,29 +11,61 @@
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
   <title>Личный кабинет</title>
-<style>
-  :root {
-    --primary-color: #252525;
-    --size: 1rem;
-  }
-  .section {
-    color: var(--primary-color);
-  }
-  .block {
-    --primory-color: #444444;
-  }
-  :root{
-    --primary-h: 220;
-    --primary-s: 70%;
-    --primary-b: 40%;
-  }
-  .button {
-    background-color: hsl(var(--primary-h), var(    --primary-s), var(--primary-b));
-  }
-  .button:hover{
-    --primary-b:30%;
-  }
-</style>
+  <style>
+    :root {
+      --primary-color: #252525;
+      --size: 1rem;
+    }
+
+    .section {
+      color: var(--primary-color);
+    }
+
+    .block {
+      --primory-color: #444444;
+    }
+
+    :root {
+      --primary-h: 220;
+      --primary-s: 70%;
+      --primary-b: 40%;
+    }
+
+    .button {
+      background-color: hsl(var(--primary-h), var(--primary-s), var(--primary-b));
+    }
+
+    .button:hover {
+      --primary-b: 30%;
+    }
+
+.edit-btn {
+      color: red;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      color: darkred;
+    }
+
+    .save-btn {
+      color: green;
+      cursor: pointer;
+    }
+
+    .save-btn:hover {
+      color: darkgreen;
+    }
+
+    .cancel-btn {
+      color: blue;
+      cursor: pointer;
+    }
+
+    .cancel-btn:hover {
+      color: darkblue;
+    }
+  </style>
 
 </head>
 
@@ -87,7 +119,7 @@
             aria-controls="v-pills-messages" aria-selected="false">Сообщения</a>
           <a class="nav-link" id="settingsTab" data-toggle="pill" href="#v-pills-settings" role="tab"
             aria-controls="v-pills-settings" aria-selected="false">Настройки</a>
-            <a  class="nav-link" role="tab" href="login">На главную</a>
+          <a class="nav-link" role="tab" href="login">На главную</a>
         </div>
       </div>
 
@@ -180,15 +212,19 @@
               <span class="edit-btn">[Изменить]</span>
               <span class="save-btn" hidden data-item="name">[Сохранить]</span>
               <span class="cancel-btn" hidden>[Отменить]</span>
-          </p>
-          <p>Фамилия:
+            </p>
+            <p>Фамилия:
               <span id="userLastname"></span>
               <span class="edit-btn">[Изменить]</span>
               <span class="save-btn" hidden data-item="lastname">[Сохранить]</span>
               <span class="cancel-btn" hidden>[Отменить]</span>
-          </p>
-          <p id="userEmail"></p>
-          <p id="userId"></p>
+            </p>
+            <p>Email:
+              <span id="userEmail"></span>
+            </p>
+            <p>ID:
+              <span id="userId"></span>
+            </p>
           </div>
         </div>
       </div>
@@ -213,18 +249,57 @@
       let response = await fetch("/getUser");
       return await response.json();
     }
+    // находим кнопки и помещаем их в переменные
+    let edit_buttons = document.querySelectorAll(".edit-btn");
+    let save_buttons = document.querySelectorAll(".save-btn");
+    let cancel_buttons = document.querySelectorAll(".cancel-btn");
 
+    // нажимаем кнопки
+    for (let i = 0; i < edit_buttons.length; i++) {
+      let inputValue = edit_buttons[i].previousElementSibling.innerText;
+      // если нажали изменить то появляется поле для ввода нового значения
+      edit_buttons[i].addEventListener("click", () => {
+        edit_buttons[i].previousElementSibling.innerHTML = `<input type = "text" value = "${inputValue}">`;
+        cancel_buttons[i].hidden = false;
+        save_buttons[i].hidden = false;
+        edit_buttons[i].hidden = true;
+      });
+
+      // если изменили и нажали сохранить то выводится изменённое значение функция асинхронная
+      save_buttons[i].addEventListener("click", async () => {
+        let newInputValue = edit_buttons[i].previousElementSibling.firstElementChild.value;
+        edit_buttons[i].previousElementSibling.innerText = newInputValue;
+        cancel_buttons[i].hidden = true;
+        save_buttons[i].hidden = true;
+        edit_buttons[i].hidden = false;
+
+        // создаётся форма с изменёнными значениями
+        let formData = new FormData();
+        formData.append("value", newInputValue);
+        formData.append("item", save_buttons[i].dataset.item);
+
+        // и отправляется на обработку
+        let response = await fetch('php/lk_obr.php', {
+          method: 'POST',
+          body: formData
+        });
+      });
+
+      // если изменили (или не изменили) и нажали отменить выводятся первоначпльные значения
+      cancel_buttons[i].addEventListener("click", () => {
+        edit_buttons[i].previousElementSibling.innerHTML = inputValue;
+        cancel_buttons[i].hidden = true;
+        save_buttons[i].hidden = true;
+        edit_buttons[i].hidden = false;
+      });
+    }
 
     if (pathname == ("profile")) {
       user = getUser();
-      console.log(user);
+      //console.log(user);
       getUser().then(user => {
         uN.innerText = `${user.name}`;
         uLn.innerText = `${user.lastname}`;
-        userName.innerText = `${user.name}`;
-        userLastname.innerText = `${user.lastname}`;
-        userEmail.innerText = `${user.email}`;
-        userId.innerText = `${user.id}`;
       });
       //user.then((result) => { console.log(result); });
       // getUser().then((user) => {
@@ -235,6 +310,13 @@
       $('#messagesTab').tab('show')
     } else if (pathname == ("settings")) {
       $('#settingsTab').tab('show')
+      user = getUser();
+      getUser().then(user => {
+        userName.innerText = `${user.name}`;
+        userLastname.innerText = `${user.lastname}`;
+        userEmail.innerText = `${user.email}`;
+        userId.innerText = `${user.id}`;
+      });
     } else {
       location.href = location.protocol + "//" + location.host;
     }
@@ -251,52 +333,9 @@
 
     // element.style.getPropertyValue("--my-var");
   </script>
-      <script>
-        // находим кнопки и помещаем их в переменные
-        let edit_buttons = document.querySelectorAll(".edit-btn");
-        let save_buttons = document.querySelectorAll(".save-btn");
-        let cancel_buttons = document.querySelectorAll(".cancel-btn");
+  
 
-        // нажимаем кнопки
-        for (let i = 0; i < edit_buttons.length; i++) {
-            let inputValue = edit_buttons[i].previousElementSibling.innerText;
-            // если нажали изменить то появляется поле для ввода нового значения
-            edit_buttons[i].addEventListener("click", () => {
-                edit_buttons[i].previousElementSibling.innerHTML = `<input type = "text" value = "${inputValue}">`;
-                cancel_buttons[i].hidden = false;
-                save_buttons[i].hidden = false;
-                edit_buttons[i].hidden = true;
-            });
 
-            // если изменили и нажали сохранить то выводится изменённое значение функция асинхронная
-            save_buttons[i].addEventListener("click", async () => {
-                let newInputValue = edit_buttons[i].previousElementSibling.firstElementChild.value;
-                edit_buttons[i].previousElementSibling.innerText = newInputValue;
-                cancel_buttons[i].hidden = true;
-                save_buttons[i].hidden = true;
-                edit_buttons[i].hidden = false;
-                
-                // создаётся форма с изменёнными значениями
-                let formData = new FormData();
-                formData.append("value", newInputValue);
-                formData.append("item", save_buttons[i].dataset.item);
-
-                // и отправляется на обработку
-                let response = await fetch('php/lk_obr.php', {
-                    method: 'POST',
-                    body: formData
-                });
-            });
-
-            // если изменили (или не изменили) и нажали отменить выводятся первоначпльные значения
-            cancel_buttons[i].addEventListener("click", () => {
-                edit_buttons[i].previousElementSibling.innerHTML = inputValue;
-                cancel_buttons[i].hidden = true;
-                save_buttons[i].hidden = true;
-                edit_buttons[i].hidden = false;
-            });
-        }
-    </script>
 
 
   <!-- Option 2: Separate Popper and Bootstrap JS -->
